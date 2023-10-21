@@ -1,3 +1,10 @@
+data "template_file" "hostname_init" {
+    template = "${file("${path.module}/hostname.tpl")}"
+    vars = {
+        host_name = "${aws_instance.web.private_ip}"
+    }
+}
+
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
 
@@ -24,6 +31,8 @@ resource "aws_instance" "web" {
     device_index         = 0
   }
   
+  user_data = "${data.template_file.hostname_init.rendered}"
+
   tags = {
     Name = "golfzon-poc"
   }
@@ -32,7 +41,7 @@ resource "aws_instance" "web" {
 ## network interface for instance: 
 resource "aws_network_interface" "golfzon-nic" {
   subnet_id   = aws_subnet.golfzon-subnet.id
-  private_ips = [ var.var.priv_ip ]
+  private_ips = [ var.priv_ip ]
   #security_groups = [""]
 
   tags = {
