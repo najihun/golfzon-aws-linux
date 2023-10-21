@@ -11,4 +11,4 @@ variable "priv_ip" {
 variable "host_name" {
     description = "customed hostname for instance"
     type = string
-}s
+}
