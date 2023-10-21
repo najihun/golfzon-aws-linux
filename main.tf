@@ -1,11 +1,8 @@
 data "template_file" "hostname_init" {
     template = "${file("${path.module}/hostname.tpl")}"
     vars = {
-        host_name = "${aws_instance.web.private_ip}"
+        host_name = "${aws_instance.web.name}"
     }
-    depends_on = [ 
-        aws_instance.web
-     ]
 }
 
 data "aws_ami" "amazon_linux_2" {
