@@ -17,11 +17,8 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
-  
-  ## private ip customization
-  private_ip    = var.priv_ip
 
-  ## network interface for eip attachment dynamically
+  ## network interface for ip addrs attachment dynamically
   network_interface {
     network_interface_id = aws_network_interface.golfzon-nic.id
     device_index         = 0
@@ -35,6 +32,7 @@ resource "aws_instance" "web" {
 ## network interface for instance: 
 resource "aws_network_interface" "golfzon-nic" {
   subnet_id   = aws_subnet.golfzon-subnet.id
+  private_ips = [ var.var.priv_ip ]
   #security_groups = [""]
 
   tags = {
