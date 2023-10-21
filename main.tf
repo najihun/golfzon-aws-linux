@@ -1,7 +1,7 @@
 data "template_file" "hostname_init" {
     template = "${file("${path.module}/hostname.tpl")}"
     vars = {
-        host_name = "${aws_instance.web.name}"
+        host_name = var.host_name
     }
 }
 
