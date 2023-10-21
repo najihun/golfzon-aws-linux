@@ -1,24 +1,24 @@
 data "template_file" "hostname_init" {
-    template = "${file("${path.module}/hostname.tpl")}"
-    vars = {
-        host_name = var.host_name
-    }
+  template = file("${path.module}/hostname.tpl")
+  vars = {
+    host_name = var.host_name
+  }
 }
 
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
 
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+
   filter {
     name   = "name"
     values = ["amzn2-ami-hvm*"]
   }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
 }
 
 resource "aws_instance" "web" {
@@ -30,8 +30,8 @@ resource "aws_instance" "web" {
     network_interface_id = aws_network_interface.golfzon-nic.id
     device_index         = 0
   }
-  
-  user_data = "${data.template_file.hostname_init.rendered}"
+
+  user_data = data.template_file.hostname_init.rendered
 
   tags = {
     Name = "golfzon-poc"
@@ -41,7 +41,7 @@ resource "aws_instance" "web" {
 ## network interface for instance: 
 resource "aws_network_interface" "golfzon-nic" {
   subnet_id   = aws_subnet.golfzon-subnet.id
-  private_ips = [ var.priv_ip ]
+  private_ips = [var.priv_ip]
   #security_groups = [""]
 
   tags = {
