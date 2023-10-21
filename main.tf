@@ -62,7 +62,7 @@ resource "aws_vpc" "golfzon-vpc" {
 resource "aws_subnet" "golfzon-subnet" {
   vpc_id            = aws_vpc.golfzon-vpc.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "ap-northast-2a"
+  availability_zone = "ap-northeast-2a"
 
   tags = {
     Name = "golfzon-poc"
