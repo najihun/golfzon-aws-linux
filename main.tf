@@ -54,6 +54,11 @@ resource "aws_eip" "golfzon-eip" {
   domain                    = "vpc"
   network_interface         = aws_network_interface.golfzon-nic.id
   associate_with_private_ip = var.priv_ip
+
+  tags = {
+    Name = "golfzon-poc"
+  }
+
 }
 
 ## test vpc: golfzon-vpc (10.0.0.0/16)
@@ -78,8 +83,8 @@ resource "aws_subnet" "golfzon-subnet" {
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.golfzon-vpc.id
-
+  
   tags = {
-    Name = "main"
+    Name = "golfzon-poc"
   }
 }
