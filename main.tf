@@ -3,6 +3,9 @@ data "template_file" "hostname_init" {
     vars = {
         host_name = "${aws_instance.web.private_ip}"
     }
+    depends_on = [ 
+        aws_instance.web
+     ]
 }
 
 data "aws_ami" "amazon_linux_2" {
