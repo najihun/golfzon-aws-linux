@@ -33,8 +33,8 @@ resource "aws_instance" "web" {
 
   user_data = data.template_file.hostname_init.rendered
 
-  key_name = aws_key_pair.hashi-najihun
-
+  key_name = aws_key_pair.kp
+  
   tags = {
     Name = "golfzon-poc"
   }
