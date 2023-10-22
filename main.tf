@@ -33,6 +33,8 @@ resource "aws_instance" "web" {
 
   user_data = data.template_file.hostname_init.rendered
 
+  key_name = aws_key_pair.hashi-najihun
+
   tags = {
     Name = "golfzon-poc"
   }
@@ -47,6 +49,10 @@ resource "aws_network_interface" "golfzon-nic" {
   tags = {
     Name = "golfzon-poc"
   }
+
+  depends_on = [ 
+    aws_instance.web
+   ]
 }
 
 ## elastic ip: attach to golfzon-nic for instance && associate private ip for instance
@@ -87,4 +93,9 @@ resource "aws_internet_gateway" "gw" {
   tags = {
     Name = "golfzon-poc"
   }
+}
+
+import {
+  to = aws_key_pair.hashi-najihun
+  id = "key-00f55d421b89b948c"
 }
