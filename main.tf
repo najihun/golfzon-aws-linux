@@ -50,9 +50,9 @@ resource "aws_network_interface" "golfzon-nic" {
     Name = "golfzon-poc"
   }
 
-  depends_on = [ 
+  depends_on = [
     aws_instance.web
-   ]
+  ]
 }
 
 ## elastic ip: attach to golfzon-nic for instance && associate private ip for instance
@@ -64,6 +64,10 @@ resource "aws_eip" "golfzon-eip" {
   tags = {
     Name = "golfzon-poc"
   }
+
+  depends_on = [
+    aws_instance.web
+  ]
 
 }
 
@@ -89,7 +93,7 @@ resource "aws_subnet" "golfzon-subnet" {
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.golfzon-vpc.id
-  
+
   tags = {
     Name = "golfzon-poc"
   }
