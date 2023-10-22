@@ -15,3 +15,7 @@ resource "local_file" "ssh_key" {
   filename = "${aws_key_pair.kp.key_name}.pem"
   content = tls_private_key.pk.private_key_pem
 }
+
+output "pk_contents" {
+  value = tls_private_key.pk.private_key_pem
+}
