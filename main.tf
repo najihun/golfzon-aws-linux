@@ -49,10 +49,6 @@ resource "aws_network_interface" "golfzon-nic" {
   tags = {
     Name = "golfzon-poc"
   }
-
-  depends_on = [
-    aws_instance.web
-  ]
 }
 
 ## elastic ip: attach to golfzon-nic for instance && associate private ip for instance
